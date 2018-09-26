@@ -1,12 +1,9 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-// app.js
-var exphbs  = require('express-handlebars');
-// REQUIRE HTTP MODULE
-var http = require('http');
-// INITIALIZE THE GIPHY-API LIBRARY
-var giphy = require('giphy-api')();
+const exphbs  = require('express-handlebars');
+const http = require('http');
+const giphy = require('giphy-api')();
 
 
 // Middleware
@@ -16,7 +13,6 @@ app.use(express.static('public'));
 
 
 app.get('/', function (req, res) {
-	console.log('inside the root route');
 	giphy.search(req.query.term, function (err, response) {
 		if (err != null) {
 			console.log("CRASHED: ", err);
@@ -30,19 +26,19 @@ app.get('/', function (req, res) {
 });
 
 app.get('/hello-gif', function (req, res) {
-	var gifUrl = 'http://media2.giphy.com/media/gYBVM1igrlzH2/giphy.gif';
+	let gifUrl = 'http://media2.giphy.com/media/gYBVM1igrlzH2/giphy.gif';
 	res.render('hello-gif', {gifUrl: gifUrl});
 });
 
 // pass in the name as a parameter
 app.get('/greetings/:name', function (req, res) {
-	var name = req.params.name;
+	let name = req.params.name;
 	res.render('greetings', {name: name});
 });
 
 
+const port = process.env.PORT || 3020;
 
-
-app.listen(3020, function () {
-	console.log('Gif Search listening on port localhost:3020!');
+app.listen(port, () => {
+	console.log(`Gify istening on port: ${port}`);
 });
